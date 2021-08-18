@@ -4,3 +4,6 @@ export interface Person {
     lastName: string,
 };
 
+// function getPersons(): Person[] {
+
+// } // GET api/v1/persons

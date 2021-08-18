@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { ModalCreatePerson } from "./ModalCreatePerson";
-import {ModalEditPerson} from './ModalEditPerson';
+import { ModalEditPerson } from './ModalEditPerson';
+import cancel from "../img/cancel.png";
+import pencil from "../img/pencil.png";
+import user from "../img/user.png";
+
 
 export function Table() {
     const [show, setShow] = useState(false);
@@ -26,49 +30,34 @@ export function Table() {
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">1</th>
+                        <th scope="row user-icon">
+                            <img className='icon user-icon'
+                                src={user}
+                                alt={'edit'} />
+                        </th>
                         <td>Mark</td>
                         <td>Otto</td>
                         <td>
-                            <div className="btn-group" role="group"
+                            <div role="group"
                                 aria-label="Basic mixed styles example">
                                 <button type="button"
-                                    className="btn btn-success"
-                                    onClick={handleCreateShow}
-                                >Редактировать</button>
+                                    className="btn-edit btn btn-sm"
+                                    onClick={handleCreateShow}>
+                                    <img className='icon'
+                                        src={pencil}
+                                        alt={'edit'} />
+                                </button>
                                 <button type="button"
-                                    className="btn btn-danger">Удалить</button>
+                                    className="btn-delete btn btn-sm">
+                                    <img className='icon'
+                                        src={cancel}
+                                        alt={'delete'} />
+                                </button>
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>
-                            <div className="btn-group" role="group"
-                                aria-label="Basic mixed styles example">
-                                <button type="button"
-                                    className="btn btn-success">Редактировать</button>
-                                <button type="button"
-                                    className="btn btn-danger">Удалить</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>Bird</td>
-                        <td>
-                            <div className="btn-group" role="group"
-                                aria-label="Basic mixed styles example">
-                                <button type="button"
-                                    className="btn btn-success">Редактировать</button>
-                                <button type="button"
-                                    className="btn btn-danger">Удалить</button>
-                            </div>
-                        </td>
-                    </tr>
+
+
                 </tbody>
             </table>
 
@@ -111,7 +100,7 @@ export function Table() {
                 <Modal.Header closeButton>
                     <Modal.Title>Редактирование сотрудника</Modal.Title>
                 </Modal.Header>
-                
+
                 <Modal.Body>
                     <a href='#'>Назад к списку</a>
                 </Modal.Body>

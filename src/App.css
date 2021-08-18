@@ -6,18 +6,66 @@
   color: #61dafb;
 }
 
-.wrapper{
+.wrapper {
   margin-top: 64px;
 
 }
 
-.form-container{
+.form-container {
   border: #282c34 solid 1px;
   border-radius: 8px;
   width: 360px;
   margin: 46px auto;
 }
 
-.form__modal{
+.form__modal {
   padding: 8px;
+}
+
+.btn-edit {
+  background-color: #fff2cc;
+  border-color: #d6b656;
+}
+
+.btn-edit:focus {
+  color: #fff;
+  background-color: #d6b656;
+  border-color: #d6b656;
+  box-shadow: 0 0 0 0.25rem rgb(60 153 110 / 50%);
+}
+
+
+.btn-delete {
+  background-color: #f8cecc;
+  border-color: #b85450;
+}
+
+.btn-delete:focus {
+  color: #fff;
+  background-color: #b85450;
+  border-color: #b85450;
+  box-shadow: 0 0 0 0.25rem rgb(60 153 110 / 50%);
+}
+
+.user-icon {
+  width: 36px;
+  height: 36px;
+  margin: auto;
+  position: relative;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+
+
+
+.btn-group {
+  display: block;
+  margin-left: auto;
+  margin-right: auto
 }

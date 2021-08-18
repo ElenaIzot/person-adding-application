@@ -80,4 +80,7 @@
 .header__table{
   background-color: #f8f8f8;
   border: #999999 solid 1px;
+  border-style: solid none none none;
+
+ 
 }

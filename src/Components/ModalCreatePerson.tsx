@@ -1,38 +1,32 @@
 import { useState } from "react";
-import { Person, savePersons } from "./Models";
+import { Person, savePersons as savePerson } from "./Models";
 
-let ID: number = 4;
 
-export function ModalCreatePerson() {
-    const [addedPerson, setAddedPerson] = useState<Person>({
-        id: 0,
+export function ModalCreatePerson(props: { onSubmit: () => void }) {
+    const [addedPerson, setPerson] = useState<Person>({
+        id: null,
         firstName: '',
         lastName: '',
     });
 
-    function handleChangeFirstName(e: any): void {
-        setAddedPerson({
-            ...addedPerson,
-            id: ID++,
-            firstName: e.target.value,
-        });
-    };
+    const [canSubmit, setCanSubmit] = useState(false);
 
-    function handleChangeLastName(e: any): void {
-        setAddedPerson({
+    function handleChange(e: any) {
+        const name = e.target.name;
+        const person = {
             ...addedPerson,
-            lastName: e.target.value
-        })
+            [name]: e.target.value
+        };
+        setPerson(person);
+        setCanSubmit(!!person.firstName && !!person.lastName)
     }
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        savePersons(addedPerson);
-        setAddedPerson({
-            id: 0,
-            firstName: '',
-            lastName: '',
-        });
+        savePerson(addedPerson).then(() => {
+            console.log('сохранено');
+            props.onSubmit();
+        })
     };
 
     return (
@@ -43,7 +37,8 @@ export function ModalCreatePerson() {
                     className="form-control"
                     placeholder="Введите имя сотрудника"
                     value={addedPerson.firstName}
-                    onChange={handleChangeFirstName}
+                    name='firstName'
+                    onChange={handleChange}
                 />
             </div>
             <div className="mb-3">
@@ -51,7 +46,8 @@ export function ModalCreatePerson() {
                     className="form-control"
                     placeholder="Введите фамилию сотрудника"
                     value={addedPerson.lastName}
-                    onChange={handleChangeLastName}
+                    name='lastName'
+                    onChange={handleChange}
                 />
             </div>
             <div className="mb-3">
@@ -60,11 +56,11 @@ export function ModalCreatePerson() {
                     type="submit"
                     data-bs-toggle="modal"
                     data-bs-target="#staticBackdrop"
+                    disabled={!canSubmit}
                 >
                     Сохранить
                 </button>
             </div>
-
         </form>
     );
 }

@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Modal } from "react-bootstrap";
 import { ModalCreatePerson } from "./ModalCreatePerson";
 import { ModalEditPerson } from './ModalEditPerson';
 import cancel from "../img/cancel.png";
 import pencil from "../img/pencil.png";
 import user from "../img/user.png";
-import { getPersons, Person, savePersons } from "./Models"
+import { deletePerson, getPersons, Person } from "./Models"
 
 export function Table() {
     const [persons, setPersons] = useState<Array<Person>>([]);
@@ -13,26 +13,36 @@ export function Table() {
     const [showCreationPerson, setShowCreationPerson] = useState(false);
     const [showDeletePerson, setShowDeletePerson] = useState(false);
 
-    getPersons().then(response => {
-        return response
-    }).then(personsArray => {
-        setPersons(personsArray)
-    })
+    useEffect(() => {
+        getPersons().then(response => {
+            return response
+        }).then((persons: Person[]) => {
+            setPersons(persons)
+        })
+    });
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const onPeopleCreateSubmit = () => {
+        setShow(false)
+    }
+
+    const onPeopleCreateHide = () => setShow(false);
+    const onPeopleCreateShow = () => setShow(true);
 
     const handleCreateClose = () => setShowCreationPerson(false);
     const handleCreateShow = () => setShowCreationPerson(true);
 
-    const handleDeleteClose = () => setShowDeletePerson(false);
+    // const handleDeleteClose = () => setShowDeletePerson(false);
     const handleDeleteShow = () => setShowDeletePerson(true);
+    const handleDeleteClose = () => {
+        setShowDeletePerson(false)
+    };
+
 
     console.log('persons', persons);
 
     let renderedPersonInTable = persons.map((person, id) => {
         return (
-            <tr key={id}>
+            <tr key={person.id}>
                 <th scope="row user-icon">
                     <img className='icon user-icon'
                         src={user}
@@ -69,7 +79,7 @@ export function Table() {
     return (
         <div className='wrapper'>
             <table className="table">
-                <thead>
+                <thead className="header__table">
                     <tr>
                         <th scope="col"></th>
                         <th scope="col">Имя</th>
@@ -85,14 +95,14 @@ export function Table() {
                 className="btn btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop"
-                onClick={handleShow}
+                onClick={onPeopleCreateShow}
             >
                 Добавить сотрудника
             </button>
 
             <Modal
                 show={show}
-                onHide={handleClose}
+                onHide={onPeopleCreateHide}
                 backdrop="static"
                 keyboard={false}
             >
@@ -102,7 +112,7 @@ export function Table() {
                 <Modal.Body>
                     <a href='/'>Назад к списку</a>
                 </Modal.Body>
-                <ModalCreatePerson />
+                <ModalCreatePerson onSubmit={onPeopleCreateSubmit}/>
             </Modal>
 
             <Modal

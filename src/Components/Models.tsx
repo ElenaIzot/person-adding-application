@@ -5,6 +5,7 @@ export interface Person {
 };
 
 //API взаимодействия: GET api/v1/persons
+// export let ID: number = 3;
 
 const _PERSONS_FROM_SERVER: Person[] = [
     {

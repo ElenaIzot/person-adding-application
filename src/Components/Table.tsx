@@ -7,21 +7,11 @@ import pencil from "../img/pencil.png";
 import user from "../img/user.png";
 import { getPersons, Person, savePersons } from "./Models"
 
-
 export function Table() {
     const [persons, setPersons] = useState<Array<Person>>([]);
     const [show, setShow] = useState(false);
     const [showCreationPerson, setShowCreationPerson] = useState(false);
     const [showDeletePerson, setShowDeletePerson] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    const handleCreateClose = () => setShowCreationPerson(false)
-    const handleCreateShow = () => setShowCreationPerson(true)
-
-    const handleDeleteClose = () => setShowDeletePerson(false)
-    const handleDeleteShow = () => setShowDeletePerson(true)
 
     getPersons().then(response => {
         return response
@@ -29,6 +19,14 @@ export function Table() {
         setPersons(personsArray)
     })
 
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const handleCreateClose = () => setShowCreationPerson(false);
+    const handleCreateShow = () => setShowCreationPerson(true);
+
+    const handleDeleteClose = () => setShowDeletePerson(false);
+    const handleDeleteShow = () => setShowDeletePerson(true);
 
     console.log('persons', persons);
 
@@ -60,6 +58,7 @@ export function Table() {
                                 alt={'delete'}
                             />
                         </button>
+
                     </div>
                 </td>
             </tr>
@@ -82,7 +81,6 @@ export function Table() {
                     {renderedPersonInTable}
                 </tbody>
             </table>
-
             <button type="button"
                 className="btn btn-primary"
                 data-bs-toggle="modal"
@@ -92,14 +90,13 @@ export function Table() {
                 Добавить сотрудника
             </button>
 
-
             <Modal
                 show={show}
                 onHide={handleClose}
                 backdrop="static"
                 keyboard={false}
             >
-                <Modal.Header closeButton>
+                <Modal.Header closeButton className="modal__header">
                     <Modal.Title>Создание сотрудника</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -114,20 +111,13 @@ export function Table() {
                 backdrop="static"
                 keyboard={false}
             >
-                <Modal.Header closeButton>
+                <Modal.Header closeButton className="modal__header">
                     <Modal.Title>Редактирование сотрудника</Modal.Title>
                 </Modal.Header>
-
                 <Modal.Body>
                     <a href='#'>Назад к списку</a>
                 </Modal.Body>
-
                 <ModalEditPerson />
-                <Modal.Footer>
-                    <Button variant="primary">
-                        Сохранить
-                    </Button>
-                </Modal.Footer>
             </Modal>
 
             <Modal
@@ -136,24 +126,30 @@ export function Table() {
                 backdrop="static"
                 keyboard={false}
             >
-                <Modal.Header closeButton>
+                <Modal.Header closeButton className="modal__header">
                     <Modal.Title>Удаление сотрудника</Modal.Title>
                 </Modal.Header>
-
                 <Modal.Body>
                     <a href='#'>Назад к списку</a>
                 </Modal.Body>
                 <Modal.Body>
-                    <div>Вы действительно хотите удалить сотрудника?</div>
+                    <form className="form__modal">
+                        <div className="mb-3">
+                            Вы действительно хотите удалить сотрудника?
+                        </div>
+                        <div className="mb-3">
+                            <button
+                                className="form__btn btn btn-primary"
+                                type="submit"
+                                data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop"
+                            >
+                                Удалить
+                            </button>
+                        </div>
+                    </form>
                 </Modal.Body>
-
-                <Modal.Footer>
-                    <Button variant="primary">
-                        Сохранить
-                    </Button>
-                </Modal.Footer>
             </Modal>
-
         </div>
     )
 }

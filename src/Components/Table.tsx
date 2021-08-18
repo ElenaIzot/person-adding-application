@@ -11,12 +11,12 @@ export function Table() {
     const [persons, setPersons] = useState<Array<Person>>([]);
     const [show, setShow] = useState(false);
     const [showCreationPerson, setShowCreationPerson] = useState(false);
+
+    const [personToDeleteId, setPersonToDeleteId] = useState(-1);
     const [showDeletePerson, setShowDeletePerson] = useState(false);
 
     useEffect(() => {
-        getPersons().then(response => {
-            return response
-        }).then((persons: Person[]) => {
+        getPersons().then((persons: Person[]) => {
             setPersons(persons)
         })
     });
@@ -31,14 +31,21 @@ export function Table() {
     const handleCreateClose = () => setShowCreationPerson(false);
     const handleCreateShow = () => setShowCreationPerson(true);
 
-    // const handleDeleteClose = () => setShowDeletePerson(false);
-    const handleDeleteShow = () => setShowDeletePerson(true);
-    const handleDeleteClose = () => {
-        setShowDeletePerson(false)
-    };
+    const showPeopleDeleteDialog = (id: number) => {
+        setPersonToDeleteId(id);
+        setShowDeletePerson(true);
+    }
 
+    const onPersonDeletedConfirmed = (e: any) => {
+        e.preventDefault();
+        deletePerson(personToDeleteId!).then(() => {
+            getPersons().then((persons: Person[]) => {
+                setPersons(persons);
+                setShowDeletePerson(false)
+            });
+        });
 
-    console.log('persons', persons);
+    }
 
     let renderedPersonInTable = persons.map((person, id) => {
         return (
@@ -62,7 +69,8 @@ export function Table() {
                         </button>
                         <button type="button"
                             className="btn-delete btn btn-sm"
-                            onClick={handleDeleteShow}>
+                            onClick={() => showPeopleDeleteDialog(person.id!)}
+                        >
                             <img className='icon'
                                 src={cancel}
                                 alt={'delete'}
@@ -112,7 +120,7 @@ export function Table() {
                 <Modal.Body>
                     <a href='/'>Назад к списку</a>
                 </Modal.Body>
-                <ModalCreatePerson onSubmit={onPeopleCreateSubmit}/>
+                <ModalCreatePerson onSubmit={onPeopleCreateSubmit} />
             </Modal>
 
             <Modal
@@ -132,7 +140,7 @@ export function Table() {
 
             <Modal
                 show={showDeletePerson}
-                onHide={handleDeleteClose}
+                onHide={() => setShowDeletePerson(false)}
                 backdrop="static"
                 keyboard={false}
             >
@@ -153,6 +161,7 @@ export function Table() {
                                 type="submit"
                                 data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop"
+                                onClick={onPersonDeletedConfirmed}
                             >
                                 Удалить
                             </button>

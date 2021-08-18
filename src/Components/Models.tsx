@@ -44,6 +44,6 @@ export async function savePersons(person: Person): Promise<void> {
     }
 };
 
-export async function deletePerson(person: Person): Promise<void> {
-    _PERSONS_FROM_SERVER = _PERSONS_FROM_SERVER.filter(elem => elem.id !== person.id);
+export async function deletePerson(id: number): Promise<void> {
+    _PERSONS_FROM_SERVER = _PERSONS_FROM_SERVER.filter(elem => elem.id !== id);
 };

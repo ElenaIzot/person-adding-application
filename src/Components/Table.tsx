@@ -9,8 +9,14 @@ import { deletePerson, getPersons, Person } from "./Models"
 
 export function Table() {
     const [persons, setPersons] = useState<Array<Person>>([]);
-    const [show, setShow] = useState(false);
-    const [showCreationPerson, setShowCreationPerson] = useState(false);
+    const [creatModalState, setCreatModalState] = useState({
+        isVisible: false,
+        person: {
+            id: -1,
+            firstName: '',
+            lastName: '',
+        }
+    });
 
     const [personToDeleteId, setPersonToDeleteId] = useState(-1);
     const [showDeletePerson, setShowDeletePerson] = useState(false);
@@ -21,11 +27,44 @@ export function Table() {
         })
     });
 
-    const onPeopleCreateSubmit = () => setShow(false);
+    const onPeopleCreateSubmit = () => {
+        getPersons().then((persons: Person[]) => {
+            setPersons(persons)
+            setCreatModalState({
+                ...creatModalState,
+                isVisible: false,
+            })
+        });
+    };
+
 
     const showPeopleDeleteDialog = (id: number) => {
         setPersonToDeleteId(id);
         setShowDeletePerson(true);
+    }
+    const showCreatePersonModal = () => {
+        setCreatModalState({
+            ...creatModalState,
+            isVisible: true,
+            person: {
+                id: -1,
+                firstName: '',
+                lastName: '',
+            }
+        })
+
+    }
+
+    const showPeopleEditDialog = (person: Person): void => {
+        setCreatModalState({
+            ...creatModalState,
+            isVisible: true,
+            person: {
+                id: person.id,
+                firstName: person.firstName,
+                lastName: person.lastName,
+            }
+        })
     }
 
     const onPersonDeletedConfirmed = (e: any) => {
@@ -53,7 +92,7 @@ export function Table() {
                     <div className="btns-group" role="group">
                         <button type="button"
                             className="btn-edit btn btn-sm"
-                            onClick={() => setShowCreationPerson(true)}>
+                            onClick={() => showPeopleEditDialog(person)}>
                             <img className='icon'
                                 src={pencil}
                                 alt={'edit'} />
@@ -72,7 +111,6 @@ export function Table() {
             </tr>
         )
     });
-
 
     return (
         <div className='wrapper'>
@@ -93,12 +131,12 @@ export function Table() {
                 className="btn btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop"
-                onClick={() => setShow(true)}
+                onClick={showCreatePersonModal}
             >
                 Добавить сотрудника
             </button>
 
-            <Modal
+            {/* <Modal
                 show={show}
                 onHide={() => setShow(false)}
                 backdrop="static"
@@ -110,11 +148,16 @@ export function Table() {
                     <a href='/'>Назад к списку</a>
                 </Modal.Body>
                 <ModalCreatePerson onSubmit={onPeopleCreateSubmit} />
-            </Modal>
+            </Modal> */}
+
 
             <Modal
-                show={showCreationPerson}
-                onHide={() => setShowCreationPerson(false)}
+                show={creatModalState.isVisible}
+                onHide={() => setCreatModalState({
+                    ...creatModalState,
+                    isVisible: false
+                })}
+
                 backdrop="static"
                 keyboard={false}>
                 <Modal.Header closeButton className="modal__header">
@@ -123,8 +166,7 @@ export function Table() {
                 <Modal.Body>
                     <a href='#'>Назад к списку</a>
                 </Modal.Body>
-                <ModalCreatePerson onSubmit={onPeopleCreateSubmit} />
-                {/* <ModalEditPerson /> */}
+                <ModalCreatePerson person={creatModalState.person} onSubmit={onPeopleCreateSubmit} />
             </Modal>
 
             <Modal

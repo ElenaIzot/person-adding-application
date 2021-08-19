@@ -1,5 +1,5 @@
 export interface Person {
-    id: number|null,
+    id: number,
     firstName: string,
     lastName: string,
 };
@@ -31,7 +31,7 @@ export async function getPersons(): Promise<Person[]> {
 };
 
 export async function savePersons(person: Person): Promise<void> {
-    if (!person.id) {
+    if (person.id == -1) {
         person.id = ID++;
         _PERSONS_FROM_SERVER.push(person);
     } else {

@@ -4,24 +4,23 @@ export interface Person {
     lastName: string,
 };
 
-//API взаимодействия: GET api/v1/persons
 let ID: number = 1;
 
 let _PERSONS_FROM_SERVER: Person[] = [
     {
         id: ID++,
-        firstName: 'Jo',
-        lastName: 'Green',
+        firstName: 'John',
+        lastName: 'Boo',
     },
     {
         id: ID++,
-        firstName: 'Ly',
-        lastName: 'Water',
+        firstName: 'Li',
+        lastName: 'Robinson',
     },
     {
         id: ID++,
         firstName: 'Jack',
-        lastName: 'Black',
+        lastName: 'Green',
     },
 ];
 

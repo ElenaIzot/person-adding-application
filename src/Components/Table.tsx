@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { ModalCreatePerson } from "./ModalCreatePerson";
-import { ModalEditPerson } from './ModalEditPerson';
 import cancel from "../img/cancel.png";
 import pencil from "../img/pencil.png";
 import user from "../img/user.png";
@@ -37,11 +36,11 @@ export function Table() {
         });
     };
 
-
     const showPeopleDeleteDialog = (id: number) => {
         setPersonToDeleteId(id);
         setShowDeletePerson(true);
     }
+
     const showCreatePersonModal = () => {
         setCreatModalState({
             ...creatModalState,
@@ -52,7 +51,6 @@ export function Table() {
                 lastName: '',
             }
         })
-
     }
 
     const showPeopleEditDialog = (person: Person): void => {
@@ -99,8 +97,7 @@ export function Table() {
                         </button>
                         <button type="button"
                             className="btn-delete btn btn-sm"
-                            onClick={() => showPeopleDeleteDialog(person.id!)}
-                        >
+                            onClick={() => showPeopleDeleteDialog(person.id!)}>
                             <img className='icon'
                                 src={cancel}
                                 alt={'delete'}
@@ -131,44 +128,27 @@ export function Table() {
                 className="btn btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop"
-                onClick={showCreatePersonModal}
-            >
+                onClick={showCreatePersonModal}>
                 Добавить сотрудника
             </button>
-
-            {/* <Modal
-                show={show}
-                onHide={() => setShow(false)}
-                backdrop="static"
-                keyboard={false}>
-                <Modal.Header closeButton className="modal__header">
-                    <Modal.Title>Создание сотрудника</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <a href='/'>Назад к списку</a>
-                </Modal.Body>
-                <ModalCreatePerson onSubmit={onPeopleCreateSubmit} />
-            </Modal> */}
-
-
             <Modal
                 show={creatModalState.isVisible}
                 onHide={() => setCreatModalState({
                     ...creatModalState,
                     isVisible: false
                 })}
-
                 backdrop="static"
                 keyboard={false}>
                 <Modal.Header closeButton className="modal__header">
                     <Modal.Title>Редактирование сотрудника</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <a href='#'>Назад к списку</a>
+                    <a href=''>Назад к списку</a>   
                 </Modal.Body>
-                <ModalCreatePerson person={creatModalState.person} onSubmit={onPeopleCreateSubmit} />
+                <ModalCreatePerson
+                    person={creatModalState.person}
+                    onSubmit={onPeopleCreateSubmit} />
             </Modal>
-
             <Modal
                 show={showDeletePerson}
                 onHide={() => setShowDeletePerson(false)}
@@ -178,7 +158,7 @@ export function Table() {
                     <Modal.Title>Удаление сотрудника</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <a href='#'>Назад к списку</a>
+                    <a  href='/'>Назад к списку</a>
                 </Modal.Body>
                 <Modal.Body>
                     <form className="form__modal">

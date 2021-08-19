@@ -21,15 +21,7 @@ export function Table() {
         })
     });
 
-    const onPeopleCreateSubmit = () => {
-        setShow(false)
-    }
-
-    const onPeopleCreateHide = () => setShow(false);
-    const onPeopleCreateShow = () => setShow(true);
-
-    const handleCreateClose = () => setShowCreationPerson(false);
-    const handleCreateShow = () => setShowCreationPerson(true);
+    const onPeopleCreateSubmit = () => setShow(false);
 
     const showPeopleDeleteDialog = (id: number) => {
         setPersonToDeleteId(id);
@@ -47,7 +39,7 @@ export function Table() {
 
     }
 
-    let renderedPersonInTable = persons.map((person, id) => {
+    let renderedPersonInTable = persons.map((person) => {
         return (
             <tr key={person.id}>
                 <th scope="row user-icon">
@@ -58,11 +50,10 @@ export function Table() {
                 <td>{person.firstName}</td>
                 <td>{person.lastName}</td>
                 <td>
-                    <div role="group"
-                        aria-label="Basic mixed styles example">
+                    <div className="btns-group" role="group">
                         <button type="button"
                             className="btn-edit btn btn-sm"
-                            onClick={handleCreateShow}>
+                            onClick={() => setShowCreationPerson(true)}>
                             <img className='icon'
                                 src={pencil}
                                 alt={'edit'} />
@@ -76,7 +67,6 @@ export function Table() {
                                 alt={'delete'}
                             />
                         </button>
-
                     </div>
                 </td>
             </tr>
@@ -103,17 +93,16 @@ export function Table() {
                 className="btn btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop"
-                onClick={onPeopleCreateShow}
+                onClick={() => setShow(true)}
             >
                 Добавить сотрудника
             </button>
 
             <Modal
                 show={show}
-                onHide={onPeopleCreateHide}
+                onHide={() => setShow(false)}
                 backdrop="static"
-                keyboard={false}
-            >
+                keyboard={false}>
                 <Modal.Header closeButton className="modal__header">
                     <Modal.Title>Создание сотрудника</Modal.Title>
                 </Modal.Header>
@@ -125,25 +114,24 @@ export function Table() {
 
             <Modal
                 show={showCreationPerson}
-                onHide={handleCreateClose}
+                onHide={() => setShowCreationPerson(false)}
                 backdrop="static"
-                keyboard={false}
-            >
+                keyboard={false}>
                 <Modal.Header closeButton className="modal__header">
                     <Modal.Title>Редактирование сотрудника</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <a href='#'>Назад к списку</a>
                 </Modal.Body>
-                <ModalEditPerson />
+                <ModalCreatePerson onSubmit={onPeopleCreateSubmit} />
+                {/* <ModalEditPerson /> */}
             </Modal>
 
             <Modal
                 show={showDeletePerson}
                 onHide={() => setShowDeletePerson(false)}
                 backdrop="static"
-                keyboard={false}
-            >
+                keyboard={false}>
                 <Modal.Header closeButton className="modal__header">
                     <Modal.Title>Удаление сотрудника</Modal.Title>
                 </Modal.Header>
@@ -161,8 +149,7 @@ export function Table() {
                                 type="submit"
                                 data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop"
-                                onClick={onPersonDeletedConfirmed}
-                            >
+                                onClick={onPersonDeletedConfirmed}>
                                 Удалить
                             </button>
                         </div>

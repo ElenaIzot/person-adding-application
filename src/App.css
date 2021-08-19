@@ -77,10 +77,19 @@
   margin-right: 0;
 }
 
-.header__table{
+.header__table {
   background-color: #f8f8f8;
   border: #999999 solid 1px;
   border-style: solid none none none;
-
- 
 }
+
+.btns-group{
+  width: 156px;
+  margin-right: 0px;
+  margin-left: auto;
+}
+
+.table{
+  font-size: 20px;
+}
+

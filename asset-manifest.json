@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/person-adding-application/static/css/main.46ff747a.chunk.css",
+    "main.js": "/person-adding-application/static/js/main.a5461478.chunk.js",
+    "main.js.map": "/person-adding-application/static/js/main.a5461478.chunk.js.map",
+    "runtime-main.js": "/person-adding-application/static/js/runtime-main.d744332a.js",
+    "runtime-main.js.map": "/person-adding-application/static/js/runtime-main.d744332a.js.map",
+    "static/js/2.f0c18cd1.chunk.js": "/person-adding-application/static/js/2.f0c18cd1.chunk.js",
+    "static/js/2.f0c18cd1.chunk.js.map": "/person-adding-application/static/js/2.f0c18cd1.chunk.js.map",
+    "static/js/3.812a4537.chunk.js": "/person-adding-application/static/js/3.812a4537.chunk.js",
+    "static/js/3.812a4537.chunk.js.map": "/person-adding-application/static/js/3.812a4537.chunk.js.map",
+    "index.html": "/person-adding-application/index.html",
+    "static/css/main.46ff747a.chunk.css.map": "/person-adding-application/static/css/main.46ff747a.chunk.css.map",
+    "static/js/2.f0c18cd1.chunk.js.LICENSE.txt": "/person-adding-application/static/js/2.f0c18cd1.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d744332a.js",
+    "static/js/2.f0c18cd1.chunk.js",
+    "static/css/main.46ff747a.chunk.css",
+    "static/js/main.a5461478.chunk.js"
+  ]
+}
